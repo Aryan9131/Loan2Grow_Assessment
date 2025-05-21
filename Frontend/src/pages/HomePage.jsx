@@ -3,9 +3,27 @@ import ResponsiveLayout from '../layouts/Layout';
 import { Grid, Typography } from '@mui/material';
 import ProductCard from '../components/ProductCard';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { fetchCart } from '../redux/slices/cartSlice';
+
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+
+   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const loadCart = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/cart`);
+        dispatch(fetchCart(res.data));
+      } catch (error) {
+        console.error('Error fetching cart:', error);
+      }
+    };
+
+    loadCart();
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchProducts = async () => {

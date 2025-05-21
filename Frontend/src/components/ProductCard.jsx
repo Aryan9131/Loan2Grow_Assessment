@@ -10,7 +10,7 @@ const ProductCard = ({ item }) => {
     dispatch(addToCart(item));
 
     try {
-      await axios.post(`${import.meta.env['VITE_BACKEND_BASE_URL']}/cart`, {
+      await axios.post(`${import.meta.env['VITE_BACKEND_BASE_URL']}/cart/add`, {
         product: item,
         quantity: 1,
       });

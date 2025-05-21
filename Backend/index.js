@@ -3,18 +3,22 @@ const cors = require('cors');
 require('dotenv').config();
 
 const connectDB = require('./config/mongoose');
-const cartRoutes = require('./routes/cart');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
-app.use(cors());
+app.use(cors({
+  origin: '*', // Vite frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
+
 app.use(express.json());
 
 // Connect MongoDB
 connectDB();
 
 // Routes
-app.use('/api/cart', cartRoutes);
+app.use('/', require('./routes'));
 
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
